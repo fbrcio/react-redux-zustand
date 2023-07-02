@@ -14,8 +14,8 @@ export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
 export function useCurrentLesson() {
   return useAppSelector(state => {
     const { currentLessonIndex, currentModuleIndex } = state.player
-    const currentModule = state.player.course.modules[currentModuleIndex]
-    const currentLesson = currentModule.lessons[currentLessonIndex]
+    const currentModule = state.player.course?.modules[currentModuleIndex]
+    const currentLesson = currentModule?.lessons[currentLessonIndex]
   
     return { currentLesson, currentModule }
   })

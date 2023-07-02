@@ -4,18 +4,30 @@ import { Video } from '../components/Video'
 import { Module } from '../components/Module'
 import { useAppSelector, useCurrentLesson } from '../store'
 import { useEffect } from 'react'
+import { api } from '../lib/axios'
+import { useDispatch } from 'react-redux'
+import { start } from '../store/slices/player'
 
 export function Player() {
+  const dispatch = useDispatch()
+
   const modules = useAppSelector(store => {
-    return store.player.course.modules
+    return store.player.course?.modules
   })
 
   const { currentLesson, currentModule } = useCurrentLesson()
 
   useEffect(() => {
-    document.title = `Assistindo: ${currentLesson.title} | Módulo: ${currentModule.title}`
+    if (currentLesson && currentModule) {
+      document.title = `Assistindo: ${currentLesson.title} | Módulo: ${currentModule.title}`
+    }
   }, [useCurrentLesson])
 
+  useEffect(() => {
+    api.get('/courses/1').then(response => {
+      dispatch(start(response.data))
+    })
+  }, [])
   return (
     <div className="h-screen bg-zinc-950 text-zinc-50 flex justify-center items-center">
       <div className="flex w-[1100px] flex-col gap-6">
@@ -34,7 +46,7 @@ export function Player() {
           </div>
           
           <aside className="w-80 absolute top-0 bottom-0 right-0 border-l divide-y-2 divide-zinc-900 border-zinc-800 bg-zinc-900 overflow-y-scroll scrollbar-thin scrollbar-track-zinc-800 scrollbar-thumb-zinc-950">
-            {modules.map((module, index) => (
+            {modules && modules.map((module, index) => (
               <Module 
                 key={module.id}
                 moduleIndex={index}
