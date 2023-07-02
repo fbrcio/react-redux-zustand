@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
-const playerSlice = createSlice({
+export const playerSlice = createSlice({
   name: 'player',
   initialState: {
     course: {
