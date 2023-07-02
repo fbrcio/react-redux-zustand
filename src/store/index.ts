@@ -1,4 +1,4 @@
-import { useSelector, TypedUseSelectorHook } from 'react-redux'
+import { useSelector, TypedUseSelectorHook, useDispatch } from 'react-redux'
 import { configureStore } from '@reduxjs/toolkit'
 import { player } from './slices/player'
 
@@ -8,15 +8,8 @@ export const store = configureStore({
   }
 })
 
-type RootState = ReturnType<typeof store.getState>
-export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
+export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch
 
-export function useCurrentLesson() {
-  return useAppSelector(state => {
-    const { currentLessonIndex, currentModuleIndex } = state.player
-    const currentModule = state.player.course?.modules[currentModuleIndex]
-    const currentLesson = currentModule?.lessons[currentLessonIndex]
-  
-    return { currentLesson, currentModule }
-  })
-}
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
+export const useAppDispatch: () => AppDispatch = useDispatch
