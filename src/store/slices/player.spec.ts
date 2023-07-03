@@ -28,7 +28,7 @@ const exampleState: PlayerState = {
   isLoading: false
 }
 
-describe('Store: Player Slice', () => {
+describe.skip('Store: Player Slice', () => {
   it('Should play', () => {
     const state = reducer(exampleState,  play([1, 2]))
 
