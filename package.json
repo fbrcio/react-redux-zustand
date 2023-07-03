@@ -10,7 +10,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "preview": "vite preview",
-    "server": "json-server server.json -w -d 500"
+    "server": "json-server server.json -w -d 2500"
   },
   "dependencies": {
     "@radix-ui/react-collapsible": "^1.0.3",

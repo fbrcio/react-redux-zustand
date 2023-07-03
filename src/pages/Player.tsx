@@ -12,6 +12,8 @@ export function Player() {
   const modules = useAppSelector(store => {
     return store.player.course?.modules
   })
+  
+  const isCourseLoading = useAppSelector(state => state.player.isLoading)
 
   const { currentLesson, currentModule } = useCurrentLesson()
 
@@ -43,14 +45,23 @@ export function Player() {
           </div>
           
           <aside className="w-80 absolute top-0 bottom-0 right-0 border-l divide-y-2 divide-zinc-900 border-zinc-800 bg-zinc-900 overflow-y-scroll scrollbar-thin scrollbar-track-zinc-800 scrollbar-thumb-zinc-950">
-            {modules && modules.map((module, index) => (
+            {isCourseLoading ? (
               <Module 
-                key={module.id}
-                moduleIndex={index}
-                title={module.title}
-                amountOfLessons={module.lessons.length}
+                key={'loading-state'}
+                moduleIndex={1}
+                title={'Loading'}
+                amountOfLessons={0}
               />
-            ))}
+            ) : (
+              modules && modules.map((module, index) => (
+                <Module 
+                  key={module.id}
+                  moduleIndex={index}
+                  title={module.title}
+                  amountOfLessons={module.lessons.length}
+                />
+              ))
+            )}
           </aside>
         </main>
       </div>
