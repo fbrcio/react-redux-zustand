@@ -29,8 +29,9 @@ const initialState: PlayerState = {
 
 export const loadCourse = createAsyncThunk(
   'player/load',
-  async () => {
+  async (_, thunkAPI) => {
     const response = await api.get('/courses/1')
+    console.log(thunkAPI)
 
     return response.data
   }
